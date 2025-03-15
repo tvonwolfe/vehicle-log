@@ -39,7 +39,12 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# .env file support
 gem "dotenv"
+
+# literal reduces boilerplate and provides type-checking for objects
+gem "literal"
+# create re-usable, composable UI components in Ruby
 gem "phlex-rails"
 
 group :development, :test do
@@ -49,8 +54,10 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
+  # make sure we don't have any data while running tests that shouldn't be there
   gem "database_cleaner-active_record"
 
+  # RSpec for tests
   gem "rspec-rails", require: false
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
