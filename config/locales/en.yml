@@ -28,17 +28,4 @@
 #       enabled: "ON"
 
 en:
-  log_entry:
-    create:
-      success: "Log entry was successfully created."
-    update:
-      success: "Log entry was successfully updated."
-    destroy:
-      success: "Log entry was successfully destroyed."
-  vehicle:
-    create: 
-      success: "Vehicle was successfully created."
-    update:
-      success: "Vehicle was successfully updated."
-    destroy:
-      success: "Vehicle was successfully destroyed."
+  hello: "Hello world"
