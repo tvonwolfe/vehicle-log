@@ -175,6 +175,10 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.9)
+    phlex (2.1.1)
+    phlex-rails (2.1.2)
+      phlex (~> 2.1.0)
+      railties (>= 6.1, < 9)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -353,6 +357,7 @@ DEPENDENCIES
   jbuilder
   kamal
   pg (~> 1.1)
+  phlex-rails
   propshaft
   puma (>= 5.0)
   rails (~> 8.0.2)
