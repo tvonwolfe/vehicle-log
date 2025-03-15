@@ -18,7 +18,7 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  url: <%= ENV.fetch("DATABASE_URL", nil) %>
+
 
 development:
   <<: *default
@@ -81,3 +81,5 @@ test:
 production:
   <<: *default
   database: vehicle_log_production
+  username: vehicle_log
+  password: <%= ENV["VEHICLE_LOG_DATABASE_PASSWORD"] %>

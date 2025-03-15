@@ -9,9 +9,10 @@
 #
 # See https://docs.rubocop.org/rubocop/configuration
 
-require:
-  - rubocop-performance
-  - rubocop-rails
+inherit_gem:
+  rubocop-rails-omakase: rubocop.yml
+
+plugins:
   - rubocop-factory_bot
   - rubocop-rspec
 
