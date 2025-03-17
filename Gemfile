@@ -22,7 +22,7 @@ gem "jbuilder"
 # gem "redis", ">= 4.0.1"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -55,10 +55,13 @@ group :development, :test do
   gem "brakeman", require: false
 
   # make sure we don't have any data while running tests that shouldn't be there
-  gem "database_cleaner-active_record"
+  gem "database_cleaner-active_record", require: false
 
   # RSpec for tests
   gem "rspec-rails", require: false
+
+  gem "faker"
+  gem "factory_bot_rails"
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
