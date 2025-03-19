@@ -1,4 +1,4 @@
-RSpec.describe User do
+describe User do
   let(:user) { build(:user) }
 
   describe "validations" do
