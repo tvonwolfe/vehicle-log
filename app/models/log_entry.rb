@@ -1,11 +1,17 @@
 class LogEntry < ApplicationRecord
   belongs_to :vehicle
 
+  has_one :service_record, dependent: :destroy
+
   validates :performed_on, presence: true
   validates :mileage, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   validate :vehicle_mileage_not_decreased
   validate :performed_on_not_in_future
+
+  validates_associated :service_record
+
+  accepts_nested_attributes_for :service_record
 
   private
 

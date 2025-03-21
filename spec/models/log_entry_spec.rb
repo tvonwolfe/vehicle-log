@@ -45,5 +45,15 @@ describe LogEntry do
         expect(log_entry.errors.as_json).to eq({ mileage: [ "can't be lower than last mileage reading of 1000000" ] })
       end
     end
+
+    context "when there is an associated service record" do
+      subject(:log_entry) { build(:log_entry, :with_service_record) }
+
+      it "is invalid if the service record is invalid" do
+        log_entry.service_record.service_type = nil
+        expect(log_entry).not_to be_valid
+        expect(log_entry.errors.as_json).to eq({ service_record: [ "is invalid" ], "service_record.service_type": [ "can't be blank", "is not included in the list" ] })
+      end
+    end
   end
 end
