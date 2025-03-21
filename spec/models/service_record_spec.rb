@@ -2,6 +2,27 @@ describe ServiceRecord do
   subject(:service_record) { build(:service_record) }
 
   describe "validations" do
+    it "is invalid without a title" do
+      service_record.title = nil
+
+      expect(service_record).not_to be_valid
+      expect(service_record.errors.as_json).to eq({ title: [ "can't be blank" ] })
+    end
+
+    it "is invalid if title is too long" do
+      service_record.title = Faker::Alphanumeric.alphanumeric(number: 129)
+
+      expect(service_record).not_to be_valid
+      expect(service_record.errors.as_json).to eq({ title: [ "is too long (maximum is 128 characters)" ] })
+    end
+
+    it "is invalid if description is too long" do
+      service_record.description = Faker::Alphanumeric.alphanumeric(number: 10_001)
+
+      expect(service_record).not_to be_valid
+      expect(service_record.errors.as_json).to eq({ description: [ "is too long (maximum is 10000 characters)" ] })
+    end
+
     it "is invalid without a service_type" do
       service_record.service_type = nil
 

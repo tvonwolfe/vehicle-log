@@ -1,4 +1,7 @@
 class ServiceRecord < ApplicationRecord
+  MAX_TITLE_LENGTH = 128
+  MAX_DESCRIPTION_LENGTH = 10_000
+
   belongs_to :log_entry, touch: true
 
   monetize :cost_cents
@@ -11,6 +14,8 @@ class ServiceRecord < ApplicationRecord
   }
 
   validates :service_type, presence: true, inclusion: { in: service_types.values }
+  validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }
+  validates :description, length: { maximum: MAX_DESCRIPTION_LENGTH }, allow_blank: true
 
   validate :non_negative_cost
 
