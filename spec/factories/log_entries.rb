@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :log_entry do
     vehicle
     performed_on { Date.yesterday }
-    mileage { Faker::Number.number }
+    mileage { Faker::Number.number(digits: (1..8).to_a.sample) }
 
     trait :with_service_record do
       after(:build) do |log_entry|

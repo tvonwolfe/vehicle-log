@@ -3,5 +3,6 @@ FactoryBot.define do
     log_entry
     service_type { :maintenance }
     description { Faker::Lorem.paragraph }
+    cost { 25 } # $25
   end
 end

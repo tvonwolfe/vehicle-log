@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_21_021929) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_21_141928) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -33,6 +33,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_21_021929) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "cost_cents", default: 0, null: false
+    t.string "cost_currency", default: "USD", null: false
     t.index ["log_entry_id"], name: "index_service_records_on_log_entry_id"
   end
 
