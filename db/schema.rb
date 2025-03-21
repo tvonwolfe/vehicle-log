@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_19_012742) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_20_231232) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "log_entries", force: :cascade do |t|
+    t.bigint "vehicle_id", null: false
+    t.integer "mileage"
+    t.date "performed_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["vehicle_id"], name: "index_log_entries_on_vehicle_id"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -45,6 +54,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_012742) do
     t.index ["vin"], name: "index_vehicles_on_vin"
   end
 
+  add_foreign_key "log_entries", "vehicles"
   add_foreign_key "sessions", "users"
   add_foreign_key "vehicles", "users"
 end

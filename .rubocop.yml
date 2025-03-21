@@ -19,11 +19,13 @@ plugins:
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.2.2
+  TargetRubyVersion: 3.4.2
   SuggestExtensions: true
+
 Lint/MissingSuper:
   Exclude:
     - 'app/components/**/*.rb'
+
 Metrics/AbcSize:
   Max: 20
 Metrics/BlockLength:
@@ -31,7 +33,11 @@ Metrics/BlockLength:
     - 'config/environments/*.rb'
 Metrics/MethodLength:
   Max: 15
-Style/Documentation:
-  Enabled: false
+
 RSpec/MultipleExpectations:
   Max: 5
+RSpec/NestedGroups:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
