@@ -22,10 +22,6 @@ AllCops:
   TargetRubyVersion: 3.4.2
   SuggestExtensions: true
 
-Lint/MissingSuper:
-  Exclude:
-    - 'app/components/**/*.rb'
-
 Metrics/AbcSize:
   Max: 20
 Metrics/BlockLength:
