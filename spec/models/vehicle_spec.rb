@@ -6,6 +6,7 @@ describe Vehicle do
       vehicle.year = nil
 
       expect(vehicle).not_to be_valid
+      expect(vehicle.errors.as_json).to eq({ year: [ "can't be blank", "is not a number" ] })
     end
 
     it "is invalid if year is too far in the past" do

@@ -10,9 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_19_012742) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_21_021929) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "service_types", ["maintenance", "repair", "upgrade", "other"]
+
+  create_table "log_entries", force: :cascade do |t|
+    t.bigint "vehicle_id", null: false
+    t.integer "mileage", null: false
+    t.date "performed_on", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["vehicle_id"], name: "index_log_entries_on_vehicle_id"
+  end
+
+  create_table "service_records", force: :cascade do |t|
+    t.bigint "log_entry_id", null: false
+    t.enum "service_type", default: "maintenance", null: false, enum_type: "service_types"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["log_entry_id"], name: "index_service_records_on_log_entry_id"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -45,6 +67,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_012742) do
     t.index ["vin"], name: "index_vehicles_on_vin"
   end
 
+  add_foreign_key "log_entries", "vehicles"
+  add_foreign_key "service_records", "log_entries"
   add_foreign_key "sessions", "users"
   add_foreign_key "vehicles", "users"
 end
