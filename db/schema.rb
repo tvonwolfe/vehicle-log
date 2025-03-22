@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_21_232117) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_22_143945) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
   create_enum "service_types", ["maintenance", "repair", "upgrade", "other"]
+
+  create_table "invitations", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_invitations_on_code", unique: true
+    t.index ["user_id"], name: "index_invitations_on_user_id"
+  end
 
   create_table "log_entries", force: :cascade do |t|
     t.bigint "vehicle_id", null: false
@@ -70,6 +79,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_21_232117) do
     t.index ["vin"], name: "index_vehicles_on_vin"
   end
 
+  add_foreign_key "invitations", "users"
   add_foreign_key "log_entries", "vehicles"
   add_foreign_key "service_records", "log_entries"
   add_foreign_key "sessions", "users"
