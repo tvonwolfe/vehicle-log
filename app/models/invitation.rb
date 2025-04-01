@@ -5,6 +5,8 @@ class Invitation < ApplicationRecord
 
   after_initialize :generate_code, unless: :code?
 
+  def accepted? = user.present?
+
   private
 
   def generate_code

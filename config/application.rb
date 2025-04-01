@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "boot"
 
 # Pick the frameworks you want:
@@ -17,6 +19,7 @@ Bundler.require(*Rails.groups)
 
 module VehicleLog
   class Application < Rails::Application
+    VERSION = "0.0.1"
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 

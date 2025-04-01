@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Vehicle Log" %></title>
+    <title><%= content_for(:title) || "VehicleLog" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -22,9 +22,21 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class="min-h-dvh grid grid-rows-[5rem_100%_2rem]">
+    <header class="container mx-auto pt-4 px-5 flex sm:justify-center">
+      <h1 class="text-slate-700 font-bold text-4xl">VehicleLog</h1>
+    </header>
+    <main class="container mx-auto px-5">
       <%= yield %>
     </main>
+    <footer class="w-full flex flex-row-reverse mx-auto px-5">
+      <a class="text-gray-400 hover:underline" 
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://github.com/tvonwolfe/vehicle-log"
+      >
+        VehicleLog v<%= VehicleLog::Application::VERSION %>
+      </a>
+    </footer>
   </body>
 </html>
