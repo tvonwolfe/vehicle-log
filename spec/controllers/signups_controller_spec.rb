@@ -1,0 +1,135 @@
+describe SignupsController do
+  let(:invitation) { create(:invitation) }
+
+  describe "GET /signup" do
+    let(:params) { {  invite_code: invitation.code  } }
+
+    before do
+      allow(Views::Signups::Show).to receive(:new).with(invitation:).and_call_original
+    end
+
+    it "renders the correct view" do
+      get :show, params: params
+
+      expect(response).to be_successful
+      expect(response).to have_http_status(:ok)
+      expect(Views::Signups::Show).to have_received(:new).with(invitation:)
+    end
+
+    context "when the invitation is not found" do
+      let(:params) { { invit_code: SecureRandom.alphanumeric } }
+
+      before do
+        allow(Views::Signups::Show).to receive(:new).with(invitation: nil).and_call_original
+      end
+
+      it "renders the view" do
+        get :show, params: params
+
+        expect(response).to be_successful
+        expect(response).to have_http_status(:ok)
+        expect(Views::Signups::Show).to have_received(:new).with(invitation: nil)
+      end
+    end
+  end
+
+  describe "POST /signup" do
+    let(:params) do
+      {
+        user: attributes_for(:user),
+        invite_code: invitation.code
+      }
+    end
+
+    it "triggers email", pending: "https://github.com/tvonwolfe/vehicle-log/issues/32"
+
+    it "redirects to the correct route", pending: "https://github.com/tvonwolfe/vehicle-log/issues/38"
+
+    it "creates a user with the given parameters" do
+      expect do
+        post :create, params: params
+      end.to change(User, :count).by(1)
+
+      expect(response).to have_http_status(:found)
+      expect(User.authenticate_by(params[:user])).to eq(User.last)
+    end
+
+    it "consumes the invitation" do
+      expect do
+        post :create, params: params
+      end.to change { invitation.reload.user }
+        .and change(invitation.reload, :accepted?).from(false).to(true)
+    end
+
+    context "when the invitation has already been accepted by someone else" do
+      let!(:invitation) { create(:invitation, :with_user) }
+
+      before do
+        allow(Views::Signups::Show).to receive(:new).and_call_original
+      end
+
+      it "responds with an error status" do
+        post :create, params: params
+
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "renders the signup view with the correct error message" do
+        post :create, params: params
+
+        expect(Views::Signups::Show).to have_received(:new).with(
+          invitation: having_attributes(id: invitation.id),
+          error: "Invitation already accepted."
+        )
+      end
+
+      it "does not create a new user" do
+        expect do
+          post :create, params: params
+        end.not_to change(User, :count)
+      end
+
+      it "does not consume the invitation again" do
+        expect do
+          post :create, params: params
+        end.not_to change { invitation.reload.user_id }
+      end
+    end
+
+    context "when the invitation cannot be found with the provided code" do
+      let(:params) do
+        {
+          user: attributes_for(:user),
+          invite_code: SecureRandom.alphanumeric
+        }
+      end
+
+      before do
+        allow(Views::Signups::Show).to receive(:new).and_call_original
+      end
+
+      it "responds with an error status" do
+        post :create, params: params
+
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "renders the signup view with the correct error message" do
+        post :create, params: params
+
+        expect(Views::Signups::Show).to have_received(:new).with(
+          invitation: nil,
+          error: "Invitation not found."
+        )
+      end
+
+      it "does not create a new user" do
+        expect do
+          post :create, params: params
+        end.not_to change(User, :count)
+      end
+    end
+  end
+end

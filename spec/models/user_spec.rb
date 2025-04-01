@@ -24,4 +24,31 @@ describe User do
       expect(user.errors.as_json).to eq({ email_address: [ "is invalid" ] })
     end
   end
+
+  describe "Invitable" do
+    describe ".create_from_invitation" do
+      let(:invitation) { create(:invitation) }
+      let(:user_params) { attributes_for(:user) }
+
+      it "consumes the invitation and creates a user record" do
+        expect do
+          described_class.create_from_invitation(invitation, user_params)
+        end.to change(described_class, :count).by(1)
+          .and change(invitation.reload, :user_id)
+      end
+
+      context "when the invitation has already been used" do
+        before do
+          create(:user)
+          invitation.update!(user:)
+        end
+
+        it "raises an error" do
+          expect do
+            described_class.create_from_invitation(invitation, user_params)
+          end.to raise_error(described_class::Invitable::InvitationAlreadyAccepted, /already accepted/)
+        end
+      end
+    end
+  end
 end

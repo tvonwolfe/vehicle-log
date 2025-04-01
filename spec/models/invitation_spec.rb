@@ -25,4 +25,20 @@ describe Invitation do
       expect(invitation).to be_valid
     end
   end
+
+  describe "#accepted?" do
+    context "when not associated with a user" do
+      it "returns false" do
+        expect(invitation.accepted?).to be false
+      end
+    end
+
+    context "when associated with a user" do
+      let(:invitation) { build(:invitation, :with_user) }
+
+      it "returns true" do
+        expect(invitation.accepted?).to be true
+      end
+    end
+  end
 end
