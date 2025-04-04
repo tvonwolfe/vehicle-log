@@ -26,8 +26,8 @@ export default class extends Controller {
   validateField(element) {
     if (element.validity.valid) return true;
 
-    element.classList.add("input-outline-error");
-    element.classList.remove("input-outline-normal");
+    element.classList.add("input-error");
+    element.classList.remove("input-normal");
     this.showErrorMessage(element.validationMessage);
 
     return false;
@@ -38,8 +38,8 @@ export default class extends Controller {
    * @param {HTMLInputElement} element - the input element to validate
    */
   resetField(element) {
-    element.classList.add("input-outline-normal");
-    element.classList.remove("input-outline-error");
+    element.classList.add("input-normal");
+    element.classList.remove("input-error");
 
     this.clearErrorMessage();
   }

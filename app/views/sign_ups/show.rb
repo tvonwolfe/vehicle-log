@@ -31,47 +31,45 @@ module Views
           end
 
           form_with(
-            model: User.new,
             url: sign_up_path,
-            method: :post,
             class: "flex flex-col",
             data: { controller: "form", action: "form#submit" }
           ) do |form|
-            form.hidden_field(:invite_code, name: :invite_code, value: invitation&.code)
+            form.hidden_field(:invite_code, value: invitation&.code)
 
             div id: "email-input-container", class: "flex flex-col", data: { controller: "input", input_target: "container" } do
-              form.label(:email_address, class: "font-semibold text-slate-800 mb-1")
+              form.label(:email_address, "Email", class: "font-semibold text-slate-800 mb-1")
               form.email_field(
                 :email_address,
-                class: "input-field input-outline-normal",
+                name: "user[email_address]",
+                class: "input-field input-normal",
                 placeholder: "name@example.com",
                 required: true,
+                autofocus: true,
                 data: { input_target: "input", action: "invalid->input#invalid input#changed" }
               )
             end
-
-            div class: "mt-4"
 
             div data: { controller: "password-confirmation" } do
               div id: "password-input-container", class: "flex flex-col", data: { controller: "input", input_target: "container" } do
                 form.label(:password, class: "font-semibold text-slate-800 mb-1")
                 form.password_field(
                   :password,
-                  class: "input-field input-outline-normal",
-                  placeholder: "Password",
+                  name: "user[password]",
+                  class: "input-field input-normal",
+                  placeholder: "Password (min. 12 characters)",
                   minlength: 12,
                   required: true,
                   data: { input_target: "input", password_confirmation_target: "password", action: "invalid->input#invalid input#changed password-confirmation#changed" }
                 )
               end
 
-              div class: "mt-4"
-
               div id: "password-confirmation-input-container", class: "flex flex-col", data: { controller: "input", input_target: "container" } do
-                form.label(:confirm_password, class: "font-semibold text-slate-800 mb-1")
+                form.label(:password_confirmation, "Confirm Password", class: "font-semibold text-slate-800 mb-1")
                 form.password_field(
-                  :confirm_password,
-                  class: "input-field input-outline-normal",
+                  :password_confirmation,
+                  name: "user[password_confirmation]",
+                  class: "input-field input-normal",
                   placeholder: "Password",
                   minlength: 12,
                   required: true,

@@ -37,21 +37,15 @@ describe SignUpsController do
     let(:user_params) { attributes_for(:user) }
     let(:params) do
       {
-        user: user_params.merge(confirm_password: user_params[:password]),
+        user: user_params.merge(password_confirmation: user_params[:password]),
         invite_code: invitation.code
       }
     end
 
-    before do
-      allow(Views::SignUps::Success).to receive(:new).with(user: an_instance_of(User)).and_call_original
-    end
-
-    it "triggers email", pending: "https://github.com/tvonwolfe/vehicle-log/issues/32"
-
-    it "renders the correct view" do
+    it "redirects correctly" do
       post :create, params: params
 
-      expect(Views::SignUps::Success).to have_received(:new).with(user: having_attributes(user_params))
+      expect(response).to redirect_to new_session_path(email_address: user_params[:email_address], sign_up_success: true)
     end
 
     it "creates a user with the given parameters" do
@@ -59,7 +53,7 @@ describe SignUpsController do
         post :create, params: params
       end.to change(User, :count).by(1)
 
-      expect(response).to have_http_status(:created)
+      expect(response).to have_http_status(:found)
       expect(User.authenticate_by(user_params)).to eq(User.last)
     end
 
@@ -109,7 +103,7 @@ describe SignUpsController do
     context "when the invitation cannot be found with the provided code" do
       let(:params) do
         {
-          user: user_params.merge(confirm_password: user_params[:password]),
+          user: user_params.merge(password_confirmation: user_params[:password]),
           invite_code: SecureRandom.alphanumeric
         }
       end
@@ -144,7 +138,7 @@ describe SignUpsController do
     context "when the password params do not match" do
       let(:params) do
         {
-          user: user_params.merge(confirm_password: SecureRandom.alphanumeric),
+          user: user_params.merge(password_confirmation: SecureRandom.alphanumeric),
           invite_code: invitation.code
         }
       end

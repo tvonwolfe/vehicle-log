@@ -7,7 +7,7 @@ module Components
       end
 
       def view_template
-        div class: "mb-4 mt-12 flex justify-end" do
+        div class: "mb-4 mt-8 sm:mt-4 flex justify-end" do
           form.submit(
             cta_text,
             id: "submit-button",

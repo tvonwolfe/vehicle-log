@@ -3,22 +3,19 @@ class SignUpsController < ApplicationController
   before_action :require_invitation, only: :create
   before_action :require_matching_passwords, only: :create
 
-  skip_before_action :require_authentication
+  allow_unauthenticated_access only: %i[show create]
 
   def show
     render Views::SignUps::Show.new(invitation:)
   end
 
   def create
-    # TODO: enqueue a background job to fire email? or just fire email
-    # directly from here?
     user = User.create_from_invitation(invitation, user_params)
 
     if user.persisted?
-      render Views::SignUps::Success.new(user:), status: :created
+      redirect_to new_session_path(email_address: user.email_address, sign_up_success: true)
     else
-      # TODO: pass in error message to this component
-      render Views::SignUps::Show.new(invitation:, error: "Couldn't create account. Please try again later.")
+      render Views::SignUps::Show.new(invitation:, error: "Couldn't create account. Please try again later."), status: :bad_request
     end
   end
 
@@ -38,7 +35,7 @@ class SignUpsController < ApplicationController
   end
 
   def require_matching_passwords
-    password_confirmation = params.dig(:user, :confirm_password)
+    password_confirmation = params.dig(:user, :password_confirmation)
     return if user_params[:password] == password_confirmation
 
     render Views::SignUps::Show.new(invitation:, error: "Passwords must match."), status: :unprocessable_entity
