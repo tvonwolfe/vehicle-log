@@ -1,0 +1,74 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "488a5d3c227c75d4a75e43b590caec9e4b30330dcd4356a61b0a0f15ed9f12ff",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/controllers/sessions_controller.rb",
+      "line": 12,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => Views::Sessions::SignIn.new(:email_address => params[:email_address], :notice => (if (params[:sign_up_success].downcase.to_s == \"true\") then\n  \"Sign up successful!\"\nelse\n  nil\nend)), {})",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SessionsController",
+        "method": "new"
+      },
+      "user_input": "params[:email_address]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "6460263f7a21b1cf855f2c1181ce796e4a43a1be41e9f639625d1e04be81bed8",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/controllers/sessions_controller.rb",
+      "line": 40,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => Views::Sessions::SignIn.new(:email_address => params[:email_address], :error => \"Try again later.\"), { :status => :too_many_requests })",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SessionsController",
+        "method": "render_too_many_requests"
+      },
+      "user_input": "params[:email_address]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "cdb6663b9617d921f70d859718b4a73569581161595a0a41cde7924a4831189a",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/controllers/sessions_controller.rb",
+      "line": 22,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => Views::Sessions::SignIn.new(:email_address => params[:email_address], :error => \"Invalid email or password.\"), { :status => :bad_request })",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SessionsController",
+        "method": "create"
+      },
+      "user_input": "params[:email_address]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    }
+  ],
+  "brakeman_version": "7.0.2"
+}

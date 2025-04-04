@@ -6,7 +6,7 @@ describe Views::SignUps::Show, type: :component do
     output = render(view)
 
     expect(output).to match(/<div id="signup-form"/)
-    expect(output).to match(/<input name="invite_code" value="#{invitation.code}".*type="hidden"/)
+    expect(output).to match(/<input value="#{invitation.code}".*type="hidden".*name="invite_code"/)
     expect(output).to match(/Create Account/)
   end
 

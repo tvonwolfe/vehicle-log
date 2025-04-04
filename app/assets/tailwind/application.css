@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 .input-field {
-  @apply rounded-sm p-1 transition-[outline-width,outline-color];
+  @apply rounded-sm p-1 shadow-sm transition-[outline-width,outline-color];
   @apply focus:outline-2 focus:outline-blue-400;
 }
 
-.input-outline-normal {
-  @apply outline-1 outline-gray-400;
+.input-normal {
+  @apply outline-1 outline-gray-400 mb-4;
 }
 
-.input-outline-error {
+.input-error {
   @apply outline-1 outline-red-700;
 }
 
