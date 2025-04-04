@@ -1,11 +1,11 @@
-class SignupsController < ApplicationController
+class SignUpsController < ApplicationController
   before_action :set_invitation
   before_action :require_invitation, only: :create
 
   skip_before_action :require_authentication
 
   def show
-    render Views::Signups::Show.new(invitation:)
+    render Views::SignUps::Show.new(invitation:)
   end
 
   def create
@@ -18,7 +18,7 @@ class SignupsController < ApplicationController
       redirect_to "/"
     else
       # TODO: pass in error message to this component
-      render Views::Signups::Show.new(invitation:, error: "Couldn't create account. Please try again later.")
+      render Views::SignUps::Show.new(invitation:, error: "Couldn't create account. Please try again later.")
     end
   end
 
@@ -28,12 +28,12 @@ class SignupsController < ApplicationController
 
   def require_invitation
     if invitation.blank?
-      render Views::Signups::Show.new(invitation:, error: "Invitation not found."), status: :unprocessable_entity
+      render Views::SignUps::Show.new(invitation:, error: "Invitation not found."), status: :unprocessable_entity
       return
     end
 
     if invitation.accepted?
-      render Views::Signups::Show.new(invitation:, error: "Invitation already accepted."), status: :unprocessable_entity
+      render Views::SignUps::Show.new(invitation:, error: "Invitation already accepted."), status: :unprocessable_entity
     end
   end
 

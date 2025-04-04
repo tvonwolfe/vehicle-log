@@ -1,4 +1,4 @@
-describe Views::Signups::Show, type: :component do
+describe Views::SignUps::Show, type: :component do
   let(:invitation) { build(:invitation) }
   let(:view) { described_class.new(invitation:) }
 

@@ -1,11 +1,11 @@
-describe SignupsController do
+describe SignUpsController do
   let(:invitation) { create(:invitation) }
 
-  describe "GET /signup" do
+  describe "GET /sign_up" do
     let(:params) { {  invite_code: invitation.code  } }
 
     before do
-      allow(Views::Signups::Show).to receive(:new).with(invitation:).and_call_original
+      allow(Views::SignUps::Show).to receive(:new).with(invitation:).and_call_original
     end
 
     it "renders the correct view" do
@@ -13,14 +13,14 @@ describe SignupsController do
 
       expect(response).to be_successful
       expect(response).to have_http_status(:ok)
-      expect(Views::Signups::Show).to have_received(:new).with(invitation:)
+      expect(Views::SignUps::Show).to have_received(:new).with(invitation:)
     end
 
     context "when the invitation is not found" do
       let(:params) { { invit_code: SecureRandom.alphanumeric } }
 
       before do
-        allow(Views::Signups::Show).to receive(:new).with(invitation: nil).and_call_original
+        allow(Views::SignUps::Show).to receive(:new).with(invitation: nil).and_call_original
       end
 
       it "renders the view" do
@@ -28,12 +28,12 @@ describe SignupsController do
 
         expect(response).to be_successful
         expect(response).to have_http_status(:ok)
-        expect(Views::Signups::Show).to have_received(:new).with(invitation: nil)
+        expect(Views::SignUps::Show).to have_received(:new).with(invitation: nil)
       end
     end
   end
 
-  describe "POST /signup" do
+  describe "POST /sign_up" do
     let(:params) do
       {
         user: attributes_for(:user),
@@ -65,7 +65,7 @@ describe SignupsController do
       let!(:invitation) { create(:invitation, :with_user) }
 
       before do
-        allow(Views::Signups::Show).to receive(:new).and_call_original
+        allow(Views::SignUps::Show).to receive(:new).and_call_original
       end
 
       it "responds with an error status" do
@@ -78,7 +78,7 @@ describe SignupsController do
       it "renders the signup view with the correct error message" do
         post :create, params: params
 
-        expect(Views::Signups::Show).to have_received(:new).with(
+        expect(Views::SignUps::Show).to have_received(:new).with(
           invitation: having_attributes(id: invitation.id),
           error: "Invitation already accepted."
         )
@@ -106,7 +106,7 @@ describe SignupsController do
       end
 
       before do
-        allow(Views::Signups::Show).to receive(:new).and_call_original
+        allow(Views::SignUps::Show).to receive(:new).and_call_original
       end
 
       it "responds with an error status" do
@@ -119,7 +119,7 @@ describe SignupsController do
       it "renders the signup view with the correct error message" do
         post :create, params: params
 
-        expect(Views::Signups::Show).to have_received(:new).with(
+        expect(Views::SignUps::Show).to have_received(:new).with(
           invitation: nil,
           error: "Invitation not found."
         )
