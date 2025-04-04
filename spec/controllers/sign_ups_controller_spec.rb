@@ -41,16 +41,24 @@ describe SignUpsController do
       }
     end
 
+    before do
+      allow(Views::SignUps::Success).to receive(:new).with(user: an_instance_of(User)).and_call_original
+    end
+
     it "triggers email", pending: "https://github.com/tvonwolfe/vehicle-log/issues/32"
 
-    it "redirects to the correct route", pending: "https://github.com/tvonwolfe/vehicle-log/issues/38"
+    it "renders the correct view" do
+      post :create, params: params
+
+      expect(Views::SignUps::Success).to have_received(:new).with(user: having_attributes(params[:user]))
+    end
 
     it "creates a user with the given parameters" do
       expect do
         post :create, params: params
       end.to change(User, :count).by(1)
 
-      expect(response).to have_http_status(:found)
+      expect(response).to have_http_status(:created)
       expect(User.authenticate_by(params[:user])).to eq(User.last)
     end
 
