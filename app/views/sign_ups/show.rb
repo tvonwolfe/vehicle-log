@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Views
-  module Signups
+  module SignUps
     class Show < Base
       include Phlex::Rails::Helpers::FormWith
 
@@ -32,7 +32,7 @@ module Views
 
           form_with(
             model: User.new,
-            url: signup_path,
+            url: sign_up_path,
             method: :post,
             class: "flex flex-col",
             data: { controller: "form", action: "form#submit" }

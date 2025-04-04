@@ -13,5 +13,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resource :signup, only: %i[create show]
+  resource :sign_up, only: %i[create show]
 end
