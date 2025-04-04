@@ -34,9 +34,10 @@ describe SignUpsController do
   end
 
   describe "POST /sign_up" do
+    let(:user_params) { attributes_for(:user) }
     let(:params) do
       {
-        user: attributes_for(:user),
+        user: user_params.merge(confirm_password: user_params[:password]),
         invite_code: invitation.code
       }
     end
@@ -50,7 +51,7 @@ describe SignUpsController do
     it "renders the correct view" do
       post :create, params: params
 
-      expect(Views::SignUps::Success).to have_received(:new).with(user: having_attributes(params[:user]))
+      expect(Views::SignUps::Success).to have_received(:new).with(user: having_attributes(user_params))
     end
 
     it "creates a user with the given parameters" do
@@ -59,7 +60,7 @@ describe SignUpsController do
       end.to change(User, :count).by(1)
 
       expect(response).to have_http_status(:created)
-      expect(User.authenticate_by(params[:user])).to eq(User.last)
+      expect(User.authenticate_by(user_params)).to eq(User.last)
     end
 
     it "consumes the invitation" do
@@ -108,7 +109,7 @@ describe SignUpsController do
     context "when the invitation cannot be found with the provided code" do
       let(:params) do
         {
-          user: attributes_for(:user),
+          user: user_params.merge(confirm_password: user_params[:password]),
           invite_code: SecureRandom.alphanumeric
         }
       end
@@ -131,6 +132,38 @@ describe SignUpsController do
           invitation: nil,
           error: "Invitation not found."
         )
+      end
+
+      it "does not create a new user" do
+        expect do
+          post :create, params: params
+        end.not_to change(User, :count)
+      end
+    end
+
+    context "when the password params do not match" do
+      let(:params) do
+        {
+          user: user_params.merge(confirm_password: SecureRandom.alphanumeric),
+          invite_code: invitation.code
+        }
+      end
+
+      before do
+        allow(Views::SignUps::Show).to receive(:new).and_call_original
+      end
+
+      it "responds with an error status" do
+        post :create, params: params
+
+        expect(response).not_to be_successful
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "renders the signup view with the correct error message" do
+        post :create, params: params
+
+        expect(Views::SignUps::Show).to have_received(:new).with(invitation: having_attributes(id: invitation.id), error: "Passwords must match.")
       end
 
       it "does not create a new user" do
