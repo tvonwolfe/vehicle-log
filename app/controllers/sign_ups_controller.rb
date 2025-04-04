@@ -1,6 +1,7 @@
 class SignUpsController < ApplicationController
   before_action :set_invitation
   before_action :require_invitation, only: :create
+  before_action :require_matching_passwords, only: :create
 
   skip_before_action :require_authentication
 
@@ -36,6 +37,13 @@ class SignUpsController < ApplicationController
     end
   end
 
+  def require_matching_passwords
+    password_confirmation = params.dig(:user, :confirm_password)
+    return if user_params[:password] == password_confirmation
+
+    render Views::SignUps::Show.new(invitation:, error: "Passwords must match."), status: :unprocessable_entity
+  end
+
   def set_invitation
     @invitation = Invitation.find_by(code: params[:invite_code])
   end
@@ -43,7 +51,7 @@ class SignUpsController < ApplicationController
   def user_params
     params.require(:user).permit(
       :email_address,
-      :password
+      :password,
     )
   end
 end

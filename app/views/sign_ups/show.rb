@@ -52,16 +52,32 @@ module Views
 
             div class: "mt-4"
 
-            div id: "password-input-container", class: "flex flex-col", data: { controller: "input", input_target: "container" } do
-              form.label(:password, class: "font-semibold text-slate-800 mb-1")
-              form.password_field(
-                :password,
-                class: "input-field input-outline-normal",
-                placeholder: "Password",
-                minlength: 12,
-                required: true,
-                data: { input_target: "input", action: "invalid->input#invalid input#changed" }
-              )
+            div data: { controller: "password-confirmation" } do
+              div id: "password-input-container", class: "flex flex-col", data: { controller: "input", input_target: "container" } do
+                form.label(:password, class: "font-semibold text-slate-800 mb-1")
+                form.password_field(
+                  :password,
+                  class: "input-field input-outline-normal",
+                  placeholder: "Password",
+                  minlength: 12,
+                  required: true,
+                  data: { input_target: "input", password_confirmation_target: "password", action: "invalid->input#invalid input#changed password-confirmation#changed" }
+                )
+              end
+
+              div class: "mt-4"
+
+              div id: "password-confirmation-input-container", class: "flex flex-col", data: { controller: "input", input_target: "container" } do
+                form.label(:confirm_password, class: "font-semibold text-slate-800 mb-1")
+                form.password_field(
+                  :confirm_password,
+                  class: "input-field input-outline-normal",
+                  placeholder: "Password",
+                  minlength: 12,
+                  required: true,
+                  data: { input_target: "input", password_confirmation_target: "passwordConfirmation", action: "invalid->input#invalid input#changed password-confirmation#changed" }
+                )
+              end
             end
 
             render Components::Forms::SubmitButton.new(form:, cta_text: "Create Account")
