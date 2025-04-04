@@ -9,13 +9,12 @@ class SignUpsController < ApplicationController
   end
 
   def create
-    # TODO: render a "check your email" view for confirmation
     # TODO: enqueue a background job to fire email? or just fire email
     # directly from here?
     user = User.create_from_invitation(invitation, user_params)
 
     if user.persisted?
-      redirect_to "/"
+      render Views::SignUps::Success.new(user:), status: :created
     else
       # TODO: pass in error message to this component
       render Views::SignUps::Show.new(invitation:, error: "Couldn't create account. Please try again later.")
