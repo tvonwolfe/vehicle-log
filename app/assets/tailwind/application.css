@@ -16,3 +16,8 @@
 .button-disabled {
   @apply cursor-not-allowed opacity-60;
 }
+
+.vehicle-list-item {
+  @apply rounded-sm hover:bg-slate-100 pl-4;
+  margin-left: calc(var(--spacing) * -4);
+}

@@ -11,10 +11,13 @@ module Views
       end
 
       def view_template
+        render Components::Header
+
         div(
           id: "signin-form",
-          class: "w-full sm:w-1/3 md:w-2/3 lg:w-1/3 sm:mx-auto sm:mt-10 \
-          sm:border sm:rounded sm:p-10 sm:shadow-lg sm:border sm:border-slate-300",
+          class: "w-full sm:max-w-lg sm:mx-auto sm:mt-10 \
+                  sm:border sm:rounded sm:p-5 md:p-10 sm:shadow-lg \
+                  sm:border sm:border-slate-300",
         ) do
           if error.present?
             div id: "form-error-message", class: "text-red-700 text-lg font-semibold" do
