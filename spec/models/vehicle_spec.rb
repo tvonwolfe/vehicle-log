@@ -65,4 +65,36 @@ describe Vehicle do
       expect(vehicle.humanized_name).to eq("1991 Mazda Miata")
     end
   end
+
+  describe "#last_mileage_reading" do
+    let(:vehicle) { create(:vehicle) }
+
+    context "when there are no associated log entries" do
+      it "returns nil" do
+        expect(vehicle.last_mileage_reading).to be_nil
+      end
+    end
+
+    context "when there is one associated log entry" do
+      let!(:log_entry) { create(:log_entry, vehicle:) }
+
+      it "returns the mileage of the log entry" do
+        expect(vehicle.last_mileage_reading).to eq log_entry.mileage
+      end
+    end
+
+    context "when there are multiple associated log entries" do
+      let!(:log_entries) do
+        [ 3, 2, 1 ].map do |i|
+          mileage = 10_000 - (i * 10)
+          performed_on = Date.current - i.days
+          create(:log_entry, vehicle:, mileage:, performed_on:)
+        end
+      end
+
+      it "returns the mileage of the newest log entry" do
+        expect(vehicle.last_mileage_reading).to eq log_entries.last.mileage
+      end
+    end
+  end
 end
