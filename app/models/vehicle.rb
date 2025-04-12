@@ -12,5 +12,5 @@ class Vehicle < ApplicationRecord
 
   def humanized_name = "#{year} #{manufacturer} #{model}"
 
-  def last_mileage_reading = log_entries.last&.mileage
+  def last_mileage_reading = log_entries.select(:mileage).first&.mileage
 end
