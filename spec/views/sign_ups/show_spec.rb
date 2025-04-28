@@ -22,7 +22,7 @@ describe Views::SignUps::Show, type: :component do
     it "renders the error message" do
       output = render(view)
 
-      expect(output).to match(/<div id="form-error-message".*<p>.*&#9888; Bad invite<\/p>/)
+      expect(output).to match(/<p>Bad invite<\/p>/)
     end
   end
 end

@@ -2,25 +2,25 @@ describe Vehicle do
   let(:vehicle) { build(:vehicle) }
 
   describe "validations" do
-    it "is invalid without a year" do
-      vehicle.year = nil
+    it "is invalid without a model_year" do
+      vehicle.model_year = nil
 
       expect(vehicle).not_to be_valid
-      expect(vehicle.errors.as_json).to eq({ year: [ "can't be blank", "is not a number" ] })
+      expect(vehicle.errors.as_json).to eq({ model_year: [ "can't be blank", "is not a number" ] })
     end
 
-    it "is invalid if year is too far in the past" do
-      vehicle.year = 1924
+    it "is invalid if model_year is too far in the past" do
+      vehicle.model_year = 1924
 
       expect(vehicle).not_to be_valid
-      expect(vehicle.errors.as_json).to eq({ year: [ "must be greater than or equal to 1925" ] })
+      expect(vehicle.errors.as_json).to eq({ model_year: [ "must be greater than or equal to 1925" ] })
     end
 
-    it "is invalid if year is too far in the future" do
-      vehicle.year = Date.current.year + 2
+    it "is invalid if model_year is too far in the future" do
+      vehicle.model_year = Date.current.year + 2
 
       expect(vehicle).not_to be_valid
-      expect(vehicle.errors.as_json).to eq({ year: [ "must be less than or equal to #{Date.current.year + 1}" ] })
+      expect(vehicle.errors.as_json).to eq({ model_year: [ "must be less than or equal to #{Date.current.year + 1}" ] })
     end
 
     it "is invalid without a manufacturer" do
@@ -59,7 +59,7 @@ describe Vehicle do
   end
 
   describe "#humanized_name" do
-    let(:vehicle) { build(:vehicle, manufacturer: "Mazda", model: "Miata", year: 1991) }
+    let(:vehicle) { build(:vehicle, manufacturer: "Mazda", model: "Miata", model_year: 1991) }
 
     it "returns the expected string" do
       expect(vehicle.humanized_name).to eq("1991 Mazda Miata")

@@ -6,7 +6,7 @@ describe Components::Vehicles::ListItem, type: :component do
     output = render(component)
 
     expect(output).to match(/\A<li id="vehicle-li-#{vehicle.id}"/)
-    expect(output).to match(/<a href="\/vehicles\/#{vehicle.id}"/)
+    expect(output).to match(/<a href="\/vehicles\/#{vehicle.vin}"/)
     expect(output).to match(/<p.*>#{vehicle.humanized_name}<\/p>/)
     expect(output).to match(/<p.*>#{vehicle.vin}<\/p>/)
   end

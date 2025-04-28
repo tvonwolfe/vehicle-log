@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_22_143945) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_26_150856) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -67,7 +67,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_22_143945) do
 
   create_table "vehicles", force: :cascade do |t|
     t.string "vin", null: false
-    t.integer "year", null: false
+    t.integer "model_year", null: false
     t.string "manufacturer", null: false
     t.string "model", null: false
     t.string "license_plate_number"

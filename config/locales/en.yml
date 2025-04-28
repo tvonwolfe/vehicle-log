@@ -29,7 +29,19 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      vehicle:
+        vin: "VIN"
+        model: "Model"
+        manufacturer: "Make"
+        model_year: "Model Year"
   helpers:
-    label: 
+    label:
       user:
         email_address: "Email"
+      vehicle:
+        vin: "VIN"
+        model: "Model"
+        manufacturer: "Make"
+        model_year: "Model Year"
