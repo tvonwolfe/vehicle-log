@@ -5,6 +5,10 @@
   @apply focus:outline-2 focus:outline-blue-400;
 }
 
+.input-select {
+  @apply h-full;
+}
+
 .input-normal {
   @apply outline-1 outline-gray-400 mb-4;
 }

@@ -3,6 +3,8 @@ module Views
     class Index < Base
       include Phlex::Rails::Helpers::LinkTo
 
+      attr_reader :vehicles
+
       def initialize(vehicles)
         @vehicles = vehicles
       end
@@ -47,8 +49,6 @@ module Views
           end
         end
       end
-
-      attr_reader :vehicles
     end
   end
 end

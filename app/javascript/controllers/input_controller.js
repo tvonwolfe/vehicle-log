@@ -15,6 +15,10 @@ export default class extends Controller {
    * @param {Event}
    */
   changed() {
+    if (this.inputTarget.autocapitalize == "characters") {
+      this.inputTarget.value = this.inputTarget.value.toUpperCase();
+    }
+
     this.resetField(this.inputTarget);
   }
 

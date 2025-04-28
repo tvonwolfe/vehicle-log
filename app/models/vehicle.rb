@@ -10,7 +10,11 @@ class Vehicle < ApplicationRecord
   validates :manufacturer, :model, :vin, presence: true
   validates :vin, uniqueness: { scope: :user }
 
+  def self.valid_model_years = Array(MIN_MODEL_YEAR..(Date.current.year + 1))
+
   def humanized_name = "#{model_year} #{manufacturer} #{model}"
 
   def last_mileage_reading = log_entries.select(:mileage).first&.mileage
+
+  def to_param = vin
 end

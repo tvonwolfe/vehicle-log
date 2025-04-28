@@ -20,11 +20,7 @@ module Views
                   sm:border sm:border-slate-300",
         ) do
           if error.present?
-            div id: "form-error-message", class: "text-red-700 text-lg font-semibold" do
-              p do
-                raw safe("&#9888; #{error}")
-              end
-            end
+            render Forms::ErrorMessage.new(error:)
           end
 
           div class: "mx-auto pt-2 pb-4" do
