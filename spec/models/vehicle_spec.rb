@@ -58,6 +58,42 @@ describe Vehicle do
     end
   end
 
+  describe "normalization" do
+    describe "vin" do
+      it "upcases and strips whitespace" do
+        vin =  Faker::Vehicle.vin
+        vehicle = build(:vehicle, vin: "#{vin.downcase}     ")
+
+        expect(vehicle.vin).to eq vin
+      end
+    end
+
+    describe "license_plate_number" do
+      it "upcases and strips whitespace" do
+        license_plate_number = "      1a 3v89oc     "
+        vehicle = build(:vehicle, license_plate_number:)
+
+        expect(vehicle.license_plate_number).to eq "1A 3V89OC"
+      end
+    end
+
+    describe "manufacturer" do
+      it "strips whitespace" do
+        vehicle = build(:vehicle, manufacturer: "    Mercededes-Benz    ")
+
+        expect(vehicle.manufacturer).to eq "Mercededes-Benz"
+      end
+    end
+
+    describe "model" do
+      it "strips whitespace" do
+        vehicle = build(:vehicle, model: " Civic   ")
+
+        expect(vehicle.model).to eq "Civic"
+      end
+    end
+  end
+
   describe "#humanized_name" do
     let(:vehicle) { build(:vehicle, manufacturer: "Mazda", model: "Miata", model_year: 1991) }
 
