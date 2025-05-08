@@ -6,6 +6,9 @@ class Vehicle < ApplicationRecord
   has_many :log_entries, dependent: :destroy
   has_many :service_records, through: :log_entries
 
+  normalizes :vin, :license_plate_number, with: ->(v) { v&.strip&.upcase }
+  normalizes :manufacturer, :model, with: ->(v) { v&.strip }
+
   validates :model_year, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: MIN_MODEL_YEAR, less_than_or_equal_to: Date.current.year + 1 }
   validates :manufacturer, :model, :vin, presence: true
   validates :vin, uniqueness: { scope: :user }
