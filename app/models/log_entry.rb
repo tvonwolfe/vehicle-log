@@ -3,7 +3,7 @@ class LogEntry < ApplicationRecord
 
   has_one :service_record, dependent: :destroy
 
-  default_scope { order(created_at: :desc) }
+  default_scope { order(performed_on: :desc, created_at: :desc) }
 
   validates :performed_on, presence: true
   validates :mileage, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }

@@ -11,7 +11,7 @@ module Components
 
     def view_template
       span(class: "flex") do
-        link_to text, href, class: "text-slate-500 hover:underline font-semibold self-center"
+        link_to text, href, class: "text-slate-500 hover:underline font-semibold"
       end
     end
   end
