@@ -1,4 +1,4 @@
-describe Vehicle do
+describe Vehicle, type: :model do
   let(:vehicle) { build(:vehicle) }
 
   describe "validations" do
