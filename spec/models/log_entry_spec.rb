@@ -1,4 +1,4 @@
-describe LogEntry do
+describe LogEntry, type: :model do
   subject(:log_entry) { build(:log_entry) }
 
   describe "validations" do

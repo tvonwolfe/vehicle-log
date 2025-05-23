@@ -1,4 +1,4 @@
-describe SignUpsController do
+describe SignUpsController, type: :controller do
   let(:invitation) { create(:invitation) }
 
   describe "GET /sign_up" do

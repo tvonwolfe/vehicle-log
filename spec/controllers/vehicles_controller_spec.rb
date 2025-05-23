@@ -1,4 +1,4 @@
-describe VehiclesController do
+describe VehiclesController, type: :controller do
   let(:user) { create(:user) }
   let(:session) { create(:session, user:) }
 

@@ -1,4 +1,4 @@
-describe User do
+describe User, type: :model do
   let(:user) { build(:user) }
 
   describe "validations" do

@@ -1,4 +1,4 @@
-describe Invitation do
+describe Invitation, type: :model do
   subject(:invitation) { build(:invitation) }
 
   describe "validations" do

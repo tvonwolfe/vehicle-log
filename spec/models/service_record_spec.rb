@@ -1,4 +1,4 @@
-describe ServiceRecord do
+describe ServiceRecord, type: :model do
   subject(:service_record) { build(:service_record) }
 
   describe "validations" do
