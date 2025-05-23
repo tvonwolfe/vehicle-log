@@ -47,6 +47,7 @@ gem "literal"
 # create re-usable, composable UI components in Ruby
 gem "phlex-rails"
 
+# money
 gem "money-rails", "~> 1.12"
 
 group :development, :test do

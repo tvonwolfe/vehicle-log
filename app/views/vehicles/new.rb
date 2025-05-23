@@ -34,9 +34,12 @@ module Views
         placeholder = PLACEHOLDERS.sample
 
         div id: "new-vehicle-form", class: "w-full sm:max-w-lg sm:mx-auto sm:mt-6" do
-          div class: "mx-auto pt-2 pb-4" do
-            p class: "text-2xl font-bold text-slate-500" do
-              "Add a Vehicle"
+          div class: "flex gap-2 flex-col justify-between pt-4 sm:pt-0" do
+            render Components::Link.new(href: vehicles_path, text: "← All Vehicles")
+            div class: "pb-4" do
+              p class: "text-2xl font-bold text-slate-600" do
+                "Add a Vehicle"
+              end
             end
           end
 
