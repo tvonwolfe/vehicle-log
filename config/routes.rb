@@ -13,7 +13,10 @@ Rails.application.routes.draw do
   resource :sign_up, only: %i[create show]
 
   resources :passwords, param: :token
-  resources :vehicles, param: :vin
+  resources :vehicles, param: :vin do
+    resources :log_entries, only: %i[create index new]
+  end
+  resources :log_entries, except: %i[create index new]
 
   root "vehicles#index"
 end
