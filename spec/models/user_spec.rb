@@ -49,6 +49,16 @@ describe User, type: :model do
           end.to raise_error(described_class::Invitable::InvitationAlreadyAccepted, /already accepted/)
         end
       end
+
+      context "when the invitation is blank" do
+        let(:invitation) { nil }
+
+        it "raises an error" do
+          expect do
+            described_class.create_from_invitation(invitation, user_params)
+          end.to raise_error(ArgumentError, "invitation can't be blank")
+        end
+      end
     end
   end
 end

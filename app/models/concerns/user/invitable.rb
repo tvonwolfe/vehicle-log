@@ -6,7 +6,7 @@ class User
       has_one :invitation, dependent: :destroy
 
       def self.create_from_invitation(invitation, user_params = {})
-        raise ArgumentError, "invitation is blank" if invitation.blank?
+        raise ArgumentError, "invitation can't be blank" if invitation.blank?
         raise InvitationAlreadyAccepted, "Invitation already accepted" if invitation.accepted?
 
         Rails.logger.info(self.class.name) do
