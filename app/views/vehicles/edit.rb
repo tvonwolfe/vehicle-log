@@ -2,7 +2,7 @@
 
 module Views
   module Vehicles
-    class New < Base
+    class Edit < Base
       attr_reader :vehicle
 
       def initialize(vehicle)
@@ -11,11 +11,11 @@ module Views
 
       def view_template
         div class: "sm:max-w-lg sm:mx-auto mt-4 sm:mt-6" do
-          render Components::Link.new(href: vehicles_path, text: "← All Vehicles")
+          render Components::Link.new(href: vehicle_path(vehicle), text: "← Back to Vehicle")
           div class: "flex gap-2 flex-col justify-between mt-2 sm:mt-6 pt-4 sm:pt-0" do
             div class: "pb-4" do
               p class: "text-2xl font-bold text-slate-600" do
-                "Add a Vehicle"
+                "Edit Vehicle"
               end
             end
           end

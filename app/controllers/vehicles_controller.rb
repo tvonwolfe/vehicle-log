@@ -1,5 +1,5 @@
 class VehiclesController < ApplicationController
-  before_action :set_vehicle, only: %i[show]
+  before_action :set_vehicle, only: %i[show edit update destroy]
 
   def index
     render Views::Vehicles::Index.new(current_user.vehicles)
@@ -21,6 +21,23 @@ class VehiclesController < ApplicationController
 
   def new
     render Views::Vehicles::New.new(Vehicle.new)
+  end
+
+  def edit
+    render Views::Vehicles::Edit.new(vehicle)
+  end
+
+  def update
+    if vehicle.update(vehicle_params)
+      render Views::Vehicles::Index.new(current_user.vehicles)
+    else
+      render Views::Vehicles::Edit.new(vehicle), status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    vehicle.destroy
+    render Views::Vehicles::Index.new(current_user.vehicles)
   end
 
   private

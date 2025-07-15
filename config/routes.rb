@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :vehicles, param: :vin do
     resources :log_entries, only: %i[create index new]
   end
-  resources :log_entries, except: %i[create index new]
+  resources :log_entries, only: %i[show edit update destroy]
 
   root "vehicles#index"
 end
