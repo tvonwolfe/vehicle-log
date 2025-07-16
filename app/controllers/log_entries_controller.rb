@@ -8,6 +8,13 @@ class LogEntriesController < ApplicationController
   end
 
   def create
+    new_log_entry = vehicle.log_entries.new(log_entry_params)
+
+    if new_log_entry.save
+      redirect_to vehicle
+    else
+      render Views::LogEntries::New(new_log_entry), status: :unprocessable_entity
+    end
   end
 
   def show
@@ -15,6 +22,7 @@ class LogEntriesController < ApplicationController
   end
 
   def new
+    render Views::LogEntries::New.new(vehicle.log_entries.new)
   end
 
   def edit
@@ -30,6 +38,13 @@ class LogEntriesController < ApplicationController
 
   attr_reader :log_entry, :log_entries, :vehicle
 
+  def log_entry_params
+    params.require(:log_entry).permit(
+      :performed_on,
+      :mileage,
+      service_record_attributes: %i[title cost_cents]
+    )
+  end
   def set_log_entry = @log_entry = LogEntry.find(params[:id])
 
   def set_vehicle = @vehicle = current_user.vehicles.find_by!(vin: params[:vehicle_vin])
