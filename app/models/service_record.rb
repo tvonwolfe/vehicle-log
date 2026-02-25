@@ -4,6 +4,8 @@ class ServiceRecord < ApplicationRecord
 
   belongs_to :log_entry, touch: true
 
+  has_many_attached :attachments
+
   monetize :cost_cents
 
   enum :service_type, {
@@ -16,14 +18,5 @@ class ServiceRecord < ApplicationRecord
   validates :service_type, presence: true, inclusion: { in: service_types.values }
   validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }
   validates :description, length: { maximum: MAX_DESCRIPTION_LENGTH }, allow_blank: true
-
-  validate :non_negative_cost
-
-  private
-
-  def non_negative_cost
-    return unless cost.negative?
-
-    errors.add(:cost, "can't be less than #{Money.from_cents(0).format}")
-  end
+  validates :cost, numericality: { greater_than_or_equal_to: 0, message: "can't be less than #{Money.from_cents(0).format}" }
 end

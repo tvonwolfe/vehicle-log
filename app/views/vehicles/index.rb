@@ -2,6 +2,7 @@ module Views
   module Vehicles
     class Index < Base
       include Phlex::Rails::Helpers::LinkTo
+      include Phlex::Rails::Helpers::Flash
 
       attr_reader :vehicles
 
@@ -18,6 +19,10 @@ module Views
           end
 
           render Components::LinkButton(href: new_vehicle_path, text: "Add Vehicle")
+        end
+
+        flash.each do |type, message|
+          render Components::Message.new(message, type)
         end
 
         if vehicles.any?

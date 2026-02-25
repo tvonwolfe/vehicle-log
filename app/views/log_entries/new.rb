@@ -8,7 +8,7 @@ module Views
       end
 
       def view_template
-        div class: "sm:max-w-lg sm:mx-auto mt-4 sm:mt-6" do
+        div class: "sm:max-w-lg sm:mx-auto mt-4" do
           render Components::Link.new(href: vehicle_path(vehicle), text: "← Back to Vehicle")
           div class: "flex gap-2 flex-col justify-between mt-2 sm:mt-6 pt-4 sm:pt-0" do
             div class: "pb-4" do

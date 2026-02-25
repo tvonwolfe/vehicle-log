@@ -13,7 +13,7 @@ class VehiclesController < ApplicationController
     vehicle = current_user.vehicles.new(vehicle_params)
 
     if vehicle.save
-      redirect_to vehicle_path(vehicle)
+      redirect_to vehicle
     else
       render Views::Vehicles::New.new(vehicle), status: :unprocessable_entity
     end
@@ -29,7 +29,7 @@ class VehiclesController < ApplicationController
 
   def update
     if vehicle.update(vehicle_params)
-      render Views::Vehicles::Index.new(current_user.vehicles)
+      redirect_to vehicles_path, notice: "Vehicle destroyed successfully."
     else
       render Views::Vehicles::Edit.new(vehicle), status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class VehiclesController < ApplicationController
 
   def destroy
     vehicle.destroy
-    render Views::Vehicles::Index.new(current_user.vehicles)
+    redirect_to vehicles_path, notice: "Vehicle destroyed."
   end
 
   private
@@ -45,7 +45,7 @@ class VehiclesController < ApplicationController
   attr_reader :vehicle
 
   def set_vehicle
-    @vehicle = current_user.vehicles.find_by!(vin: params[:vin])
+    @vehicle = current_user.vehicles.includes(log_entries: :service_record).find_by!(vin: params[:vin])
   end
 
   def vehicle_params

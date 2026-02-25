@@ -49,7 +49,7 @@ module Components
                 form.label(:model_year, class: "font-semibold text-slate-800 mb-1")
                 select id: "vehicle_model_year", class: "input-field input-select input-normal", name: "#{vehicle.class.name.downcase}[model_year]" do
                   Vehicle.valid_model_years.reverse.each_with_index do |year, index|
-                    option(value: year) { year }
+                    option(value: year, selected: vehicle.model_year == year) { year }
                   end
                 end
               end

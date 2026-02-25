@@ -14,7 +14,7 @@ module Components
             h3 class: "text-2xl font-bold self-center" do
               "Service History"
             end
-            render Components::LinkButton(href: new_vehicle_log_entry_path(vehicle), text: "Add Entry")
+            Components::LinkButton(href: new_vehicle_log_entry_path(vehicle), text: "Add Entry")
           end
 
           div id: "timeline-list", class: "flex flex-col gap-1 max-w-full" do
@@ -28,7 +28,9 @@ module Components
                   p { "No service history." }
                   p do
                     plain "Add a new entry "
-                    link_to "here", new_vehicle_log_entry_path(vehicle), class: "underline"
+                    a href: new_vehicle_log_entry_path(vehicle), class: "underline" do
+                      "here"
+                    end
                     plain "."
                   end
                 end
